@@ -24,16 +24,8 @@ namespace RainRTX_Demo
             }
             Console.WriteLine("Rendering done");
 
-            Console.WriteLine("Creating bitmap");
-
-            var bitmap = GetDataPicture(GraphicCore.ColorBuffer);
-
-            Console.WriteLine("Saving to file");
-            FileStream fs = new FileStream("result.png", FileMode.Create, FileAccess.ReadWrite);
-            bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
-            fs.Close();
+            SaveFile(GraphicCore.ColorBuffer);
             Console.WriteLine("Done");
-
         }
             
         public static Scene PrepareScene()
@@ -46,28 +38,22 @@ namespace RainRTX_Demo
 
                 Spheres = new Sphere[]
                 {
-                    new Sphere(new Vector3(-1, -0.46, 5), 0.5f, new Color24(252,10,232),100),
+                    new Sphere(new Vector3(-1, -0.46f, 5), 0.5f, new Color24(252,10,232),100),
                     new Sphere(new Vector3(0,-5001,100),5000, new Color24(159,163,151)),
-                    new Sphere(new Vector3(0, -0.46, 3),0.6f, Color.White, 800),
-                    new Sphere(new Vector3(1, -0.46, 6),0.6f, new Color24(167,252,55), 800)
+                    new Sphere(new Vector3(0, -0.46f, 3),0.6f, Color.White, 800),
+                    new Sphere(new Vector3(1, -0.46f, 6),0.6f, new Color24(167,252,55), 800)
                 }
             };
             
         }
 
-        private static Bitmap GetDataPicture(Color[,] colorBuff)
+        private static void SaveFile(Bitmap bitmap)
         {
-            var w = colorBuff.GetLength(0);
-            var h = colorBuff.GetLength(1);
-            var bitmap = new Bitmap(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            for (int x = 0; x < w; x++)
-            {
-                for (int y = 0; y < h; y++)
-                {
-                    bitmap.SetPixel(x, y, colorBuff[x, y]);
-                }
-            }
-            return bitmap;
+            Console.WriteLine("Saving to file");
+            FileStream fs = new FileStream("result.png", FileMode.Create, FileAccess.ReadWrite);
+            bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
+            fs.Close();
         }
+
     }
 }

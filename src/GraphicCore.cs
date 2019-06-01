@@ -6,7 +6,7 @@ namespace RainRTX_Demo
 {
     public static class GraphicCore
     {
-        public static Color[,] ColorBuffer { get; private set; }
+        public static Bitmap ColorBuffer { get; private set; }
 
         public static bool isRenderingDone { get; private set; }
 
@@ -23,7 +23,7 @@ namespace RainRTX_Demo
             Width = w;
             Height = h;
             Scene = scene;
-            ColorBuffer = new Color[w, h];
+            ColorBuffer = new Bitmap(w, h);
 
             renderThread = new Thread(Render);
             renderThread.Start();
@@ -45,7 +45,7 @@ namespace RainRTX_Demo
 
         private static Color TraceRay (Vector3 origin, Vector3 direction)
         {
-            double closest_t = double.PositiveInfinity;
+            float closest_t = float.PositiveInfinity;
             Sphere closest_sphere = Sphere.Null;
             bool sphereFound = false;
 
@@ -79,15 +79,15 @@ namespace RainRTX_Demo
         {
             Vector3 oc = origin - sphere.center;
 
-            var k1 = direction.Dot(direction);
-            var k2 = 2 * oc.Dot(direction);
-            var k3 = oc.Dot(oc) - Math.Pow(sphere.radius, 2);
+            float k1 = direction.Dot(direction);
+            float k2 = 2 * oc.Dot(direction);
+            float k3 = oc.Dot(oc) - sphere.radius * sphere.radius;
 
-            var discriminant = k2 * k2 - 4 * k1 * k3;
-            if (discriminant < 0) return new Vector2(double.PositiveInfinity, double.PositiveInfinity);
+            float discriminant = k2 * k2 - 4 * k1 * k3;
+            if (discriminant < 0) return new Vector2(float.PositiveInfinity, float.PositiveInfinity);
 
-            var t1 = (-k2 + Math.Sqrt(discriminant)) / (2 * k1);
-            var t2 = (-k2 - Math.Sqrt(discriminant)) / (2 * k1);
+            float t1 = (float)(-k2 + Math.Sqrt(discriminant)) / (2 * k1);
+            float t2 = (float)(-k2 - Math.Sqrt(discriminant)) / (2 * k1);
             return new Vector2(t1, t2);
         }
 
@@ -142,7 +142,7 @@ namespace RainRTX_Demo
         {
             x = Width / 2 + x;
             y = Height / 2 - y - 1;
-            ColorBuffer[x, y] = color;
+            ColorBuffer.SetPixel(x, y, color);
         }
 
     }

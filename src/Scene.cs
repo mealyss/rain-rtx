@@ -9,9 +9,9 @@ namespace RainRTX_Demo
 
         public Vector3 CameraPos = Vector3.ZeroVector;
 
-        public double ViewportSize = 1;
+        public float ViewportSize = 1;
 
-        public double ProjectionPlane_z = 1;
+        public float ProjectionPlane_z = 1;
 
         #region Lights
         public AmbientLight[] ambientLights;

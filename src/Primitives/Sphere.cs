@@ -12,6 +12,8 @@ namespace RainRTX_Demo
 
         public static Sphere Null = new Sphere(Vector3.ZeroVector, 0, Color24.Black);
 
+       
+
         public Sphere(Vector3 center, float radius, Color24 color, float specular = 10)
         {
             this.center = center;
