@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace RainRTX_Demo
+namespace RainRTX
 {
     public struct Sphere
     {

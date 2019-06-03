@@ -3,7 +3,7 @@ using System.Threading;
 using System.Drawing;
 using System.IO;
 
-namespace RainRTX_Demo
+namespace RainRTX
 {
     class MainClass
     {

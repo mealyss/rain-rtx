@@ -1,5 +1,5 @@
 ﻿using System;
-namespace RainRTX_Demo
+namespace RainRTX
 {
     public struct Vector2
     {
