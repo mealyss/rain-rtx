@@ -6,5 +6,6 @@ In this project i'm going develop rtx renderer running on CPU.
 ### Current features:
  * Sphere rendering 
  * Diffuse lighing
- * Specular reflection
+ * Specular reflection 
+![alt text](/Gallery/result.png)
  
