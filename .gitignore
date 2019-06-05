@@ -1,7 +1,7 @@
 .vs/*
-bin/
-obj/
-Properties/
-packages/
+**/bin
+**/obj
+**/Properties
+**packages
 *.csproj
 *.sln

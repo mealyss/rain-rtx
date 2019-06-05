@@ -7,11 +7,13 @@ namespace RainRTX
     {
         public Color BackgroundColor = Color.White;
 
-        public Vector3 CameraPos = Vector3.ZeroVector;
+        public Vector3 CameraPos = new Vector3(0,2f,0);
 
         public float ViewportSize = 1;
 
         public float ProjectionPlane_z = 1;
+
+        public Ground Ground;
 
         #region Lights
         public AmbientLight[] ambientLights;

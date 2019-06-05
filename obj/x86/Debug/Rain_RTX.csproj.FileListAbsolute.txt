@@ -1,6 +1,0 @@
-/home/lapislar/Rain_RTX/bin/Debug/Rain_RTX.exe
-/home/lapislar/Rain_RTX/bin/Debug/Rain_RTX.pdb
-/home/lapislar/Rain_RTX/obj/x86/Debug/Rain_RTX.csprojAssemblyReference.cache
-/home/lapislar/Rain_RTX/obj/x86/Debug/Rain_RTX.csproj.CoreCompileInputs.cache
-/home/lapislar/Rain_RTX/obj/x86/Debug/Rain_RTX.exe
-/home/lapislar/Rain_RTX/obj/x86/Debug/Rain_RTX.pdb

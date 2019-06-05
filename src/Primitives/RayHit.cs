@@ -4,7 +4,7 @@ namespace RainRTX
 {
     public struct RayHit
     {
-        public bool intersected;
+        public IntersectionType intersection;
         public Color24 color;
         public float specular;
         public Vector3 normal;

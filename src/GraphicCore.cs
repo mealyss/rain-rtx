@@ -41,11 +41,11 @@ public static partial class GraphicCore
 
     private static Color ComputePixelRendering(int x, int y)
     {
-        var ray = new Ray { direction = ToFOV(new Vector2(x, y)), origin = Scene.CameraPos, energy = new Vector3(1f, 1f, 1f) };
+        var ray = new Ray { direction = ToFOV(new Vector2(x, y)), origin = Scene.CameraPos, energy = Color24.White };
         Color24 res = Color24.White;
 
         var hit = TraceRay(ray);
-        res = Shade(ref ray, hit);
+        res =  Shade(ref ray, hit) * ray.energy;
 
         return res;
     }

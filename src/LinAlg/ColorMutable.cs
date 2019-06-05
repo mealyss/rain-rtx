@@ -36,11 +36,11 @@ namespace RainRTX
         public Color24 Mul (Color24 other)
         {   
             this.r = 
-                (byte)(other.r / byte.MaxValue * (this.r / byte.MaxValue) * 255);
+                (byte)(other.r * this.r / byte.MaxValue);
             this.g =
-                (byte)(other.g / byte.MaxValue * (this.g / byte.MaxValue) * 255);
+                (byte)(other.g * this.g / byte.MaxValue);
             this.b =
-                (byte)(other.b / byte.MaxValue * (this.b / byte.MaxValue) * 255);
+                (byte)(other.b * this.b / byte.MaxValue);
 
             return this;
         }
@@ -58,6 +58,7 @@ namespace RainRTX
 
             return this;
         }
+
 
         public Color ToColor()
         {

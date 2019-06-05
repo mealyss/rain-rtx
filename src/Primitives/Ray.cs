@@ -5,6 +5,6 @@ namespace RainRTX
     {
         public Vector3 origin;
         public Vector3 direction;
-        public Vector3 energy;
+        public Color24 energy;
     }
 }

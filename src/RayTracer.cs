@@ -2,52 +2,81 @@
 using System.Drawing;
 using RainRTX;
 
+public enum IntersectionType : byte
+{
+    None = 0,
+    Ground = 1,
+    Sphere = 2,
+}
+
 public static partial class GraphicCore
 {
-
     private static RayHit TraceRay(Ray ray)
     {
         float closest_t = float.PositiveInfinity;
         Sphere closest_sphere = Sphere.Null;
-        bool sphereFound = false;
+        var intersection = IntersectionType.None;
 
         for (var i = 0; i < Scene.Spheres.Length; i++)
         {
-            Vector2 ts = IntersectRaySphere(ray.origin, ray.direction, Scene.Spheres[i]);
-            if (ts.x < closest_t && 1 < ts.x && ts.x < double.PositiveInfinity)
+            Vector2 ts = IntersectRaySphere(ray, i);
+            if (ts.x < closest_t && 1 < ts.x && ts.x < float.PositiveInfinity)
             {
                 closest_t = ts.x;
                 closest_sphere = Scene.Spheres[i];
-                sphereFound = true;
+                intersection = IntersectionType.Sphere;
             }
-            if (ts.y < closest_t && 1 < ts.y && ts.x < double.PositiveInfinity)
+            if (ts.y < closest_t && 1 < ts.y && ts.x < float.PositiveInfinity)
             {
                 closest_t = ts.y;
                 closest_sphere = Scene.Spheres[i];
-                sphereFound = true;
+                intersection = IntersectionType.Sphere;
             }
         }
-        if (sphereFound)
+
+        float tg = IntersectRayGround(ray);
+        if (tg > 0 && tg < closest_t && tg < float.PositiveInfinity)
+        {
+            closest_t = tg;
+            intersection = IntersectionType.Ground;
+        }
+
+        if (intersection == IntersectionType.Sphere)
         {
             Vector3 point = ray.origin + ray.direction * closest_t;
             return new RayHit
             {
-                intersected = true,
+                intersection = IntersectionType.Sphere,
                 color = closest_sphere.color,
                 specular = closest_sphere.specular,
                 normal = (point - closest_sphere.center).Normalize(),
                 position = point
             };
         }
-        return new RayHit { intersected = false };
+
+        if (intersection == IntersectionType.Ground)
+        {
+            if (Scene.Ground == null) return new RayHit { intersection = IntersectionType.None };
+            Vector3 point = ray.origin + ray.direction * closest_t;
+            return new RayHit
+            {
+                intersection = IntersectionType.Ground,
+                color = Scene.Ground.color,
+                specular = Scene.Ground.specular,
+                normal = new Vector3(0f, 1f, 0f),
+                position = point
+            };
+        }
+        return new RayHit { intersection = IntersectionType.None };
     }
 
-    private static Vector2 IntersectRaySphere(Vector3 origin, Vector3 direction, Sphere sphere)
+    private static Vector2 IntersectRaySphere(Ray ray, int sphereIndex)
     {
-        Vector3 oc = origin - sphere.center;
+        var sphere = Scene.Spheres[sphereIndex];
+        Vector3 oc = ray.origin - sphere.center;
 
-        float k1 = direction.Dot(direction);
-        float k2 = 2 * oc.Dot(direction);
+        float k1 = ray.direction.Dot(ray.direction);
+        float k2 = 2 * oc.Dot(ray.direction);
         float k3 = oc.Dot(oc) - sphere.radius * sphere.radius;
 
         float discriminant = k2 * k2 - 4 * k1 * k3;
@@ -58,10 +87,14 @@ public static partial class GraphicCore
         return new Vector2(t1, t2);
     }
 
+    private static float IntersectRayGround(Ray ray)
+    {
+        return -ray.origin.y / ray.direction.y;
+    }
 
     private static Color24 Shade(ref Ray ray, RayHit hit)
     {
-        if (hit.intersected)
+        if (hit.intersection != IntersectionType.None)
         {
             Color24 res = hit.color;
             return ComputeLighting(res, hit.position, hit.normal, ray.direction, hit.specular);
