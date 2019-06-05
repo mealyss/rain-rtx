@@ -36,12 +36,11 @@ namespace RainRTX
                 pointLights = new PointLight[] { new PointLight(0.7f, new Vector3(2, 1, 0)) },
                 directionalLights = new DirectionalLight[] { new DirectionalLight(0.3f, new Vector3(1, 4, 4)) },
 
-                Ground = new Ground { specular = 10, color = Color.Gold},
+                Ground = new Ground { specular = 10, color = Color.White},
 
                 Spheres = new Sphere[]
                 {
                     new Sphere(new Vector3(-1, 1.6f, 5), 0.5f, new Color24(252,10,232),100),
-                  //  new Sphere(new Vector3(0,-5001,100),5000, new Color24(159,163,151)),
                     new Sphere(new Vector3(0, 1.6f, 3),0.6f, Color.White, 800),
                     new Sphere(new Vector3(1, 1.6f, 6),0.6f, new Color24(167,252,55), 800)
                 }
