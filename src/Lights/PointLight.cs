@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Drawing;
+using System.Numerics;
 
 namespace RainRTX
 {
-    public struct DirectionalLight
+    public struct PointLight
     {
         public float intensivity;
-        public Vector3 direction;
         public Color24 color;
+        public Vector3 position;
 
-        public DirectionalLight(float intensivity, Vector3 direction)
+        public PointLight(float intensivity, Vector3 position)
         {
             this.intensivity = intensivity;
             this.color = Color24.White * intensivity;
-            this.direction = direction;
+            this.position = position;
         }
 
-        public DirectionalLight(float intensivity, Color24 color, Vector3 direction)
+        public PointLight(float intensivity, Color24 color, Vector3 position)
         {
             this.intensivity = intensivity;
             this.color = color * intensivity;
-            this.direction = direction;
+            this.position = position;
         }
     }
 }

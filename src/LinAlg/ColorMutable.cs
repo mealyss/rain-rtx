@@ -27,9 +27,9 @@ namespace RainRTX
 
         public Color24 Plus(Color24 other)
         {
-            r = (byte)(byte.MaxValue - other.r >= r ? byte.MaxValue : other.r + r);
-            g = (byte)(byte.MaxValue - other.g >= g ? byte.MaxValue : other.g + g);
-            b = (byte)(byte.MaxValue - other.b >= b ? byte.MaxValue : other.b + b);
+            r = (byte)(this.r + other.r >= byte.MaxValue ? byte.MaxValue : other.r + r);
+            g = (byte)(this.g + other.g >= byte.MaxValue ? byte.MaxValue : other.g + g);
+            b = (byte)(this.b + other.b >= byte.MaxValue ? byte.MaxValue : other.b + b);
             return this;
         }
 
@@ -62,7 +62,7 @@ namespace RainRTX
 
         public Color ToColor()
         {
-            return Color.FromArgb(255, r, g, b);
+            return Color.FromArgb(r, g, b);
         }
 
         public static Color24 operator + (Color24 left, Color24 right)

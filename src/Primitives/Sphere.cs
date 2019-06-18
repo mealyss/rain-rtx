@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Numerics;
 
 namespace RainRTX
 {
@@ -10,7 +11,7 @@ namespace RainRTX
         public readonly Color24 color;
         public readonly float specular;
 
-        public static Sphere Null = new Sphere(Vector3.ZeroVector, 0, Color24.Black);
+        public static Sphere Null = new Sphere(new Vector3(0,0,0), 0, Color24.Black);
 
        
 

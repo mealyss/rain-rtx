@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Numerics;
+
 namespace RainRTX
 {
     public struct Ray

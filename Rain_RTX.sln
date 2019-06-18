@@ -1,0 +1,27 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainRTX", "RainRTX.csproj", "{8119CB7A-7C6D-4275-8826-775C14229A05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Release|Any CPU = Release|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Debug|x86.ActiveCfg = Debug|x86
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Release|x86.ActiveCfg = Release|Any CPU
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Release|x86.Build.0 = Release|Any CPU
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8119CB7A-7C6D-4275-8826-775C14229A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+	EndGlobalSection
+EndGlobal

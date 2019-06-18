@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Numerics;
 
 namespace RainRTX
 {
@@ -7,11 +8,13 @@ namespace RainRTX
     {
         public Color BackgroundColor = Color.White;
 
-        public Vector3 CameraPos = new Vector3(0,2f,0);
-
         public float ViewportSize = 1;
 
         public float ProjectionPlane_z = 1;
+
+        public CubeMap SkyBox;
+
+        public Camera Camera;
 
         public Ground Ground;
 
@@ -25,9 +28,5 @@ namespace RainRTX
 
         public Sphere[] Spheres;
 
-        public Scene()
-        {
-
-        }
     }
 }
