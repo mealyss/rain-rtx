@@ -13,6 +13,8 @@ public static partial class GraphicCore
 
     private static Scene Scene;
 
+    private static Random m_Random = new Random();
+
     public static void RenderImage(int w, int h, Scene scene, Action callback)
     {
         Width = w;
@@ -29,17 +31,31 @@ public static partial class GraphicCore
         {
             Parallel.For(-Height/2, Height/2, (y) =>
             {
-                var color = ComputePixelRendering(x, y);
-                WritePixel(x, y, color);
+                var color1 = ComputePixelRendering(x, y);
+                var color2 = ComputePixelRendering(x, y);
+                var color3 = ComputePixelRendering(x, y);
+
+                var color_res = new Color24((byte)((color1.r + color2.r + color3.r) / 3),
+                                            (byte)((color1.g + color2.g + color3.g) / 3),
+                                            (byte)((color1.b + color2.b + color3.b) / 3));
+               
+                WritePixel(x, y, color_res);
             });
         });
     }
 
-    private static Color ComputePixelRendering(int x, int y)
+    private static Color24 ComputePixelRendering(int x, int y, bool randomizeDir = true)
     {
+        float noiseX = 0, noiseY = 0;
+        if (randomizeDir)
+        {
+            noiseX = 1.5f*(float)m_Random.NextDouble();
+            noiseY = 1.5f*(float)m_Random.NextDouble();
+        }
+
         var ray = new Ray
         {
-            direction = ToFOV(new Vector2(x, y)),
+            direction = ToFOV(new Vector2(x+noiseX, y+noiseY)),
             origin = Scene.Camera.position,
             energy = Color24.White
         };

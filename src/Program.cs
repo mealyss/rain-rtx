@@ -15,7 +15,7 @@ namespace RainRTX
             var scene = PrepareScene();
 
             Console.WriteLine("Render process started");
-            GraphicCore.RenderImage(1024, 1024, scene, Finish);
+            GraphicCore.RenderImage(2048, 2048, scene, Finish);
         }
             
         public static Scene PrepareScene()
