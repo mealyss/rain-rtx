@@ -60,6 +60,17 @@ namespace RainRTX
         }
 
 
+        public bool Any()
+        {
+            if (this.r != 0)
+                return true;
+            if (this.g != 0)
+                return true;
+            if (this.b != 0)
+                return true;
+            return false;
+        }
+
         public Color ToColor()
         {
             return Color.FromArgb(r, g, b);

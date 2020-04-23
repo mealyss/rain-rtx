@@ -9,12 +9,15 @@ namespace RainRTX
 {
     class MainClass
     {
+
+        private static DateTime _span;
         public static void Main(string[] args)
         {
             Console.WriteLine("Scene preparing");
             var scene = PrepareScene();
 
             Console.WriteLine("Render process started");
+            _span = DateTime.Now;
             GraphicCore.RenderImage(2048, 2048, scene, Finish);
         }
             
@@ -58,7 +61,7 @@ namespace RainRTX
                               new Color24((byte)rnd.Next(0, 255),
                                           (byte)rnd.Next(0, 255),
                                           (byte)rnd.Next(0, 255)),
-                                          rnd.Next(70, 100));
+                                          new Color24((byte)rnd.Next(20, 255),(byte)rnd.Next(20, 255),(byte)rnd.Next(20, 255)));
                 }
             }
         }
@@ -66,15 +69,15 @@ namespace RainRTX
         private static void SaveFile(Bitmap bitmap)
         {
             Console.WriteLine("Saving to file");
-            FileStream fs = new FileStream("result.png", FileMode.Create, FileAccess.ReadWrite);
-            bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Png);
+            FileStream fs = new FileStream("result.jpg", FileMode.Create, FileAccess.ReadWrite);
+            bitmap.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
             fs.Close();
         }
 
         public static void Finish()
         {
             Console.WriteLine("Rendering done");
-
+            Console.WriteLine("Render time: " + (DateTime.Now - _span).Seconds + " seconds");
             SaveFile(GraphicCore.ColorBuffer);
             Console.WriteLine("Done");
         }

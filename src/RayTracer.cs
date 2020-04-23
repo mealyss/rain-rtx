@@ -58,7 +58,8 @@ public static partial class GraphicCore
                 color = closest_sphere.color,
                 specular = closest_sphere.specular,
                 normal = normal,
-                position = point
+                position = point,
+                specular_vec = closest_sphere.specular_vec
             };
         }
 
@@ -103,14 +104,27 @@ public static partial class GraphicCore
     {
         if (hit.intersection != IntersectionType.None)
         {
-            Color24 res = hit.color;
-            return ComputeLighting(res, hit.position, hit.normal, ray.direction, hit.specular);
+           Color24 specular = hit.specular_vec;
+
+           ray.origin = hit.position;
+           ray.direction = Vector3.Reflect(ray.direction, hit.normal);
+           ray.energy *= specular;
+
+           return Color24.Black;
+            
+            //Old-style
+            //Color24 res = hit.color;
+            //return ComputeLightingOLD(res, hit.position, hit.normal, ray.direction, hit.specular);
         }
-        if (Scene.SkyBox != null) return Scene.SkyBox.SampleFromCamera(ray.direction);
+        ray.energy = Color24.Black;
+        if (Scene.SkyBox != null)
+            return Scene.SkyBox.SampleFromCamera(ray.direction);
         return Scene.BackgroundColor;
     }
 
-    private static Color ComputeLighting(Color24 source, Vector3 point, Vector3 normal, Vector3 view, float s)
+    
+
+    private static Color ComputeLightingOLD(Color24 source, Vector3 point, Vector3 normal, Vector3 view, float s)
     {
         var normal_len = normal.Length();
         var intensivity = 0f;

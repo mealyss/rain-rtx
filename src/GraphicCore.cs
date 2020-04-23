@@ -14,6 +14,7 @@ public static partial class GraphicCore
     private static Scene Scene;
 
     private static Random m_Random = new Random();
+    private const byte REFLECT_COUNT = 8;
 
     public static void RenderImage(int w, int h, Scene scene, Action callback)
     {
@@ -31,20 +32,13 @@ public static partial class GraphicCore
         {
             Parallel.For(-Height/2, Height/2, (y) =>
             {
-                var color1 = ComputePixelRendering(x, y);
-                var color2 = ComputePixelRendering(x, y);
-                var color3 = ComputePixelRendering(x, y);
-
-                var color_res = new Color24((byte)((color1.r + color2.r + color3.r) / 3),
-                                            (byte)((color1.g + color2.g + color3.g) / 3),
-                                            (byte)((color1.b + color2.b + color3.b) / 3));
-               
-                WritePixel(x, y, color_res);
+                var color = ComputePixelRendering(x, y);
+                WritePixel(x, y, color);
             });
         });
     }
 
-    private static Color24 ComputePixelRendering(int x, int y, bool randomizeDir = true)
+    private static Color24 ComputePixelRendering(int x, int y, bool randomizeDir = false)
     {
         float noiseX = 0, noiseY = 0;
         if (randomizeDir)
@@ -59,10 +53,17 @@ public static partial class GraphicCore
             origin = Scene.Camera.position,
             energy = Color24.White
         };
+
         Color24 res = Color24.Black;
 
-        var hit = TraceRay(ray);
-        res +=  Shade(ref ray, hit) * ray.energy;
+        for (int i = 0; i < REFLECT_COUNT; i++)
+        {
+            var hit = TraceRay(ray);
+            res +=  ray.energy * Shade(ref ray, hit);
+
+            if (!ray.energy.Any())
+                break;
+        }
 
         return res;
     }
