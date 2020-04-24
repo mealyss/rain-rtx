@@ -74,7 +74,7 @@ namespace RainRTX
         public static void Finish()
         {
             Console.WriteLine("Rendering done");
-            Console.WriteLine("Render time: " + (DateTime.Now - _span).Seconds + " seconds");
+            Console.WriteLine("Render time: " + (DateTime.Now - _span).TotalSeconds + " seconds");
             SaveFile(GraphicCore.ColorBuffer);
             Console.WriteLine("Done");
         }
