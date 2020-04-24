@@ -36,6 +36,7 @@
     <Compile Include="src\Primitives\Ground.cs" />
     <Compile Include="src\Primitives\Camera.cs" />
     <Compile Include="src\LinAlg\ColorMutable.cs" />
+    <Compile Include="src\LinAlg\Mathf.cs" />
     <Compile Include="src\Texturing\CubeMap.cs" />
     <Compile Include="src\Texturing\Texture2D.cs" />
     <Compile Include="src\Lights\AmbientLight.cs" />

@@ -18,14 +18,14 @@ namespace RainRTX
 
             Console.WriteLine("Render process started");
             _span = DateTime.Now;
-            GraphicCore.RenderImage(2048, 2048, scene, Finish);
+            GraphicCore.RenderImage(512*4, 512*4, scene, Finish);
         }
             
         public static Scene PrepareScene()
         {
             var scene = new Scene
             {
-                Ground = new Ground {specular_vec = new Color24(130, 130, 130)},
+                Ground = new Ground {specular_vec = new Color24(130, 130, 130), albedo = new Color24(60,60,60)},
                 Camera = new Camera(new Vector3(-1.5f, 1.5f, 0 ), Matrix4x4.CreateFromYawPitchRoll(45 * (float)Math.PI / 180f,
                                                                                                   20 * (float)Math.PI / 180f,
                                                                                                   0 * (float)Math.PI / 180f)),
@@ -36,9 +36,8 @@ namespace RainRTX
                                      "SkyBox/left.png",
                                      "SkyBox/right.png"),
 
-                ambientLights = new AmbientLight[] { new AmbientLight(0.2f) },
-                pointLights = new PointLight[] { new PointLight(0.7f, new Vector3(4, 1, 0)) },
-                directionalLights = new DirectionalLight[] { new DirectionalLight(0.3f, new Vector3(4, 4, 4)) },
+                directionalLights = new DirectionalLight[] {new DirectionalLight(new Vector3(0, -1, 1))}
+                
 
             };
             GenerateSpheres(scene);

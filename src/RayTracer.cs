@@ -57,7 +57,8 @@ public static partial class GraphicCore
                 intersection = IntersectionType.Sphere,
                 normal = normal,
                 position = point,
-                specular_vec = closest_sphere.specular
+                specular_vec = closest_sphere.specular,
+                albedo = closest_sphere.albedo
             };
         }
 
@@ -68,6 +69,7 @@ public static partial class GraphicCore
             {
                 intersection = IntersectionType.Ground,
                 specular_vec = Scene.Ground.specular_vec,
+                albedo = Scene.Ground.albedo,
                 normal = new Vector3(0f, 1f, 0f),
                 position = point
             };
@@ -106,12 +108,19 @@ public static partial class GraphicCore
            ray.origin = hit.position + hit.normal * 0.001f;
            ray.direction = Vector3.Reflect(ray.direction, hit.normal);
            ray.energy *= specular;
+        
+           Ray shadowRay =  new Ray
+           {
+                origin =  hit.position + hit.normal * 0.001f,
+                direction = -Scene.directionalLights[0].direction,
+                energy = Color24.Black
+           };
+           var rayHit = TraceRay(shadowRay);
+           if (rayHit.intersection != IntersectionType.None)
+                return Color24.Black;
 
-           return Color24.Black;
-            
-            //Old-style
-            //Color24 res = hit.color;
-            //return ComputeLightingOLD(res, hit.position, hit.normal, ray.direction, hit.specular);
+           var sat =  Mathf.Saturate(-Vector3.Dot(hit.normal, Vector3.Normalize(Scene.directionalLights[0].direction)));
+           return sat * hit.albedo;
         }
         ray.energy = Color24.Black;
         if (Scene.SkyBox != null)
@@ -119,46 +128,5 @@ public static partial class GraphicCore
         return Scene.BackgroundColor;
     }
 
-    
-
-    private static Color ComputeLightingOLD(Color24 source, Vector3 point, Vector3 normal, Vector3 view, float s)
-    {
-        var normal_len = normal.Length();
-        var intensivity = 0f;
-        for (int a = 0; a < Scene.ambientLights.Length; a++)
-            intensivity += Scene.ambientLights[a].intensivity;
-
-        for (int p = 0; p < Scene.pointLights.Length; p++)
-        {
-            Vector3 light = (Scene.pointLights[p].position - point);
-            var i = (float)Vector3.Dot(light, normal);
-            if (i > 0)
-                intensivity += Scene.pointLights[p].intensivity * (float)(i / (normal_len * light.Length()));
-            if (s > -1)
-            {
-                Vector3 reflection = 2 * normal * Vector3.Dot(normal,light);
-                var r_dot_v = Vector3.Dot(view, reflection);
-                if (r_dot_v > 0)
-                    intensivity += Scene.pointLights[p].intensivity * (float)Math.Pow(r_dot_v / (reflection.Length() * view.Length()), s);
-            }
-        }
-
-        for (int d = 0; d < Scene.directionalLights.Length; d++)
-        {
-            Vector3 light = Scene.directionalLights[d].direction;
-            var i = (float)Vector3.Dot(normal, light);
-            if (i > 0)
-                intensivity += Scene.directionalLights[d].intensivity * (float)(i / (normal_len * light.Length()));
-            if (s > -1)
-            {
-                Vector3 reflection = 2 * normal * Vector3.Dot(light, normal);
-                var r_dot_v = Vector3.Dot(view, reflection);
-                if (r_dot_v > 0)
-                    intensivity += Scene.pointLights[d].intensivity * (float)Math.Pow(r_dot_v / (reflection.Length() * view.Length()), s);
-            }
-        }
-
-        return source * intensivity;
-    }
 }
 

@@ -1,8 +1,8 @@
 namespace RainRTX
 {
-    public static class FloatExtenstion
+    public static class Mathf
     {
-        public static float Saturate(this float x)
+        public static float Saturate(float x)
         {
             if (x > 1)
                 return 1;

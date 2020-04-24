@@ -20,7 +20,7 @@ namespace RainRTX
             this.center = center;
             this.radius = radius;
             this.specular = specular;
-            albedo = Color24.Black;
+            albedo = new Color24(204, 204, 204);
             
         }
     }
