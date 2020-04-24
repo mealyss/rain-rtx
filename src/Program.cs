@@ -25,7 +25,8 @@ namespace RainRTX
         {
             var scene = new Scene
             {
-                Camera = new Camera(new Vector3(20, 5, 17.95f ), Matrix4x4.CreateFromYawPitchRoll(25 * (float)Math.PI / 180f,
+                Ground = new Ground {specular_vec = new Color24(130, 130, 130)},
+                Camera = new Camera(new Vector3(-1.5f, 1.5f, 0 ), Matrix4x4.CreateFromYawPitchRoll(45 * (float)Math.PI / 180f,
                                                                                                   20 * (float)Math.PI / 180f,
                                                                                                   0 * (float)Math.PI / 180f)),
                 SkyBox = new CubeMap("SkyBox/front.png",
@@ -56,12 +57,9 @@ namespace RainRTX
             {
                 for (var j = 0; j < 9; j++)
                 {
-                    scene.Spheres[i * 10 + j] = new Sphere(new Vector3(i + 20, 3, j + 20),
-                              .3f,
-                              new Color24((byte)rnd.Next(0, 255),
-                                          (byte)rnd.Next(0, 255),
-                                          (byte)rnd.Next(0, 255)),
-                                          new Color24((byte)rnd.Next(20, 255),(byte)rnd.Next(20, 255),(byte)rnd.Next(20, 255)));
+                    scene.Spheres[i * 10 + j] = new Sphere(new Vector3(i*1.3f, 0.3f, j*1.3f),
+                                .3f,
+                                new Color24(130,130,130));
                 }
             }
         }

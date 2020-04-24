@@ -4,7 +4,6 @@ namespace RainRTX
 {
     public class Ground
     {
-        public Color24 color;
-        public float specular;
+        public Color24 specular_vec;
     }
 }

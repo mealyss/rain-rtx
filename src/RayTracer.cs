@@ -23,13 +23,13 @@ public static partial class GraphicCore
         for (var i = 0; i < Scene.Spheres.Length; i++)
         {
             var ts = IntersectRaySphere(ray, i);
-            if (ts.X < closest_t && 1 < ts.X && ts.X < float.PositiveInfinity)
+            if (ts.X < closest_t && ts.X > 0 && ts.X < float.PositiveInfinity)
             {
                 closest_t = ts.X;
                 closest_sphere = Scene.Spheres[i];
                 intersection = IntersectionType.Sphere;
             }
-            if (ts.Y < closest_t && 1 < ts.Y && ts.Y < float.PositiveInfinity)
+            if (ts.Y < closest_t && ts.Y > 0 && ts.Y < float.PositiveInfinity)
             {
                 closest_t = ts.Y;
                 closest_sphere = Scene.Spheres[i];
@@ -55,11 +55,9 @@ public static partial class GraphicCore
             return new RayHit
             {
                 intersection = IntersectionType.Sphere,
-                color = closest_sphere.color,
-                specular = closest_sphere.specular,
                 normal = normal,
                 position = point,
-                specular_vec = closest_sphere.specular_vec
+                specular_vec = closest_sphere.specular
             };
         }
 
@@ -69,8 +67,7 @@ public static partial class GraphicCore
             return new RayHit
             {
                 intersection = IntersectionType.Ground,
-                color = Scene.Ground.color,
-                specular = Scene.Ground.specular,
+                specular_vec = Scene.Ground.specular_vec,
                 normal = new Vector3(0f, 1f, 0f),
                 position = point
             };
@@ -106,7 +103,7 @@ public static partial class GraphicCore
         {
            Color24 specular = hit.specular_vec;
 
-           ray.origin = hit.position;
+           ray.origin = hit.position + hit.normal * 0.001f;
            ray.direction = Vector3.Reflect(ray.direction, hit.normal);
            ray.energy *= specular;
 

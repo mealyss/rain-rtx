@@ -14,7 +14,7 @@ public static partial class GraphicCore
     private static Scene Scene;
 
     private static Random m_Random = new Random();
-    private const byte REFLECT_COUNT = 8;
+    private const byte REFLECT_COUNT = 5;
 
     public static void RenderImage(int w, int h, Scene scene, Action callback)
     {
